@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"log/slog"
 	"net/http"
 	"os"
 	"strings"
@@ -72,7 +71,6 @@ func WithUser(next http.Handler) http.Handler {
 			return
 		}
 		accessToken := session.Values[sessionAccessTokenKey]
-		slog.Info("WithUser", "accessToken", accessToken)
 		if accessToken == nil {
 			next.ServeHTTP(w, r)
 			return
