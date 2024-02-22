@@ -10,7 +10,6 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 
-	"github.com/coreycole/go_htmx/db"
 	"github.com/coreycole/go_htmx/handle"
 	"github.com/coreycole/go_htmx/lib/sb"
 )
@@ -57,8 +56,8 @@ func initEverything() error {
 	if err := godotenv.Load(); err != nil {
 		return err
 	}
-	if err := db.Init(); err != nil {
-		return err
-	}
+	// if err := db.Init(); err != nil {
+	// 	return err
+	// }
 	return sb.Init()
 }
