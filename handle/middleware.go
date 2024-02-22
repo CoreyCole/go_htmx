@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"log/slog"
 	"net/http"
 	"os"
 	"strings"
@@ -61,12 +62,21 @@ func WithUser(next http.Handler) http.Handler {
 			return
 		}
 		store := sessions.NewCookieStore([]byte(os.Getenv("SESSION_SECRET")))
+		if store == nil {
+			next.ServeHTTP(w, r)
+			return
+		}
 		session, err := store.Get(r, sessionUserKey)
 		if err != nil {
 			next.ServeHTTP(w, r)
 			return
 		}
 		accessToken := session.Values[sessionAccessTokenKey]
+		slog.Info("WithUser", "accessToken", accessToken)
+		if accessToken == nil {
+			next.ServeHTTP(w, r)
+			return
+		}
 		resp, err := sb.Client.Auth.User(r.Context(), accessToken.(string))
 		if err != nil {
 			next.ServeHTTP(w, r)

@@ -27,10 +27,10 @@ func HandleResetPasswordIndex(w http.ResponseWriter, r *http.Request) error {
 func HandleResetPasswordCreate(w http.ResponseWriter, r *http.Request) error {
 	user := getAuthenticatedUser(r)
 	return render(r, w, auth.ResetPasswordSuccess(user.Email))
-	if err := sb.Client.Auth.ResetPasswordForEmail(r.Context(), user.Email); err != nil {
-		return err
-	}
-	return nil
+	// if err := sb.Client.Auth.ResetPasswordForEmail(r.Context(), user.Email); err != nil {
+	// 	return err
+	// }
+	// return nil
 }
 
 func HandleResetPasswordUpdate(w http.ResponseWriter, r *http.Request) error {
